@@ -1,14 +1,30 @@
 import { useMutation } from '@tkeel/console-hooks';
 
 export interface BaseRequestData {
-  name: string;
   id: string;
-  type: string;
+  name: string;
   description: string;
-  last_time: number;
+  type: string;
   define: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [propName: string]: any;
+    // int
+    min: string;
+    max: string;
+    step: string;
+    unit: string;
+    // array
+    length: string;
+    elem_type: string;
+    // bool
+    '0': string;
+    '1': string;
+
+    // "":"v",
+    // "unitName":"伏",
+    // "step":"0.1",
+    // "ext":{
+    //     "alias":"EM_BI",
+    //     "ratio_of_transformation":"0.001"
+    // }
   };
 }
 

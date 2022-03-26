@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { Box, Flex } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -15,8 +16,6 @@ import { formatDateTimeByTimestamp, plugin } from '@tkeel/console-utils';
 import CreateTemplateButton from '@/tkeel-console-plugin-tenant-device-templates/pages/Index/components/CreateTemplateButton';
 import DeleteTemplateButton from '@/tkeel-console-plugin-tenant-device-templates/pages/Index/components/DeleteTemplateButton';
 import ModifyTemplateButton from '@/tkeel-console-plugin-tenant-device-templates/pages/Index/components/ModifyTemplateButton';
-
-import SaveAsTemplateButton from './components/SaveAsTemplateButton';
 
 // function getTemplateKeyData(
 //   data: TemplateTreeNodeType
@@ -62,7 +61,6 @@ function Index() {
       id: val.id,
       key: val.id,
       updatedAt: formatDateTimeByTimestamp({
-        // eslint-disable-next-line no-underscore-dangle
         timestamp: val.properties.sysField._updatedAt as string,
       }),
     };
@@ -114,13 +112,6 @@ function Index() {
                 description={item.description}
                 navigateUrl={`/detail/${item.id}`}
                 buttons={[
-                  <SaveAsTemplateButton
-                    data={item}
-                    key="modify"
-                    onSuccess={() => {
-                      refetch();
-                    }}
-                  />,
                   <ModifyTemplateButton
                     data={item}
                     key="modify"

@@ -1,5 +1,9 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable  @typescript-eslint/no-unsafe-argument */
+/* eslint-disable  @typescript-eslint/no-unsafe-assignment */
+
 import { Box, Flex, Radio, RadioGroup, Stack, Text } from '@chakra-ui/react';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import {
@@ -50,15 +54,6 @@ const configData = [
   //   config: ['时间格式'],
   // },
 ];
-
-const KV = new Map([
-  ['max', '最大值'],
-  ['min', '最小值'],
-  ['step', '步长'],
-  ['unit', '单位'],
-  ['元素个数', 'length'],
-  ['元素类型', 'elem_type'],
-]);
 
 const inputType = new Set([
   '最大值',
@@ -147,7 +142,6 @@ export default function CreateTelemetryModal({
     元素个数: register('define.length', {
       required,
     }),
-    // eslint-disable-next-line  sonarjs/no-duplicate-string
     元素类型: register('define.elem_type', {
       required,
     }),
@@ -167,25 +161,9 @@ export default function CreateTelemetryModal({
   const handleConfirm = async () => {
     const formValues = getValues();
     onConfirm({ ...formValues, type: selectValue as string });
-    setTimeout(() => {
-      RESET();
-    }, 500);
+    RESET();
     // }
   };
-
-  const handleDataType = (el: string) => {
-    setSelectValue(el);
-    const config = handleConfigData(configData, el);
-    setSelectOptions(config as []);
-    setSelectRadioCardItem('');
-  };
-
-  useEffect(() => {
-    if (defaultValues) {
-      handleDataType(defaultValues.type);
-      setSelectRadioCardItem(KV.get(Object.keys(defaultValues.define)[0]));
-    }
-  }, [defaultValues]);
 
   return (
     <Modal
@@ -220,21 +198,22 @@ export default function CreateTelemetryModal({
         数据类型
       </Box>
       <Select
-        defaultValue={defaultValues?.type}
+        // defaultValue="int"
         placeholder="请选择"
         options={configData}
         style={{ width: '100%', marginBottom: '14px', marginTop: '8px' }}
-        onChange={handleDataType}
+        onChange={(el) => {
+          setSelectValue(el);
+          const config = handleConfigData(configData, el);
+          setSelectOptions(config as []);
+          setSelectRadioCardItem('');
+          // setValue("define":  )
+        }}
       />
       {selectOptions.length > 0 && (
         <Flex justifyContent="space-between" mb="10px" alignItems="center">
           <Box>
             <SelectRadioCard
-              defaultValue={
-                defaultValues
-                  ? (KV.get(Object.keys(defaultValues?.define)[0]) as string)
-                  : '最大值'
-              }
               options={selectOptions}
               onChange={(el) => {
                 setSelectRadioCardItem(el);
@@ -260,9 +239,7 @@ export default function CreateTelemetryModal({
               id={selectRadioCardItem}
               label={selectRadioCardItem}
               isDisabled={formFields?.username?.disabled}
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               error={errors.name}
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               registerReturn={selectRadioCardObj[selectRadioCardItem]}
             />
           )}

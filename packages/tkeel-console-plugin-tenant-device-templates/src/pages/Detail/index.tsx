@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { Box, Flex, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -18,11 +19,7 @@ import useTemplateInfoQuery from '@/tkeel-console-plugin-tenant-device-templates
 // import ModifySubscriptionButton from '@/tkeel-console-plugin-tenant-device-templates/pages/Index/components/ModifySubscriptionButton';
 import TelemetryTable from '@/tkeel-console-plugin-tenant-device-templates/pages/Detail/components/TelemetryTable';
 
-import DeleteTemplateButton from '../Index/components/DeleteTemplateButton';
-import ModifyTemplateButton from '../Index/components/ModifyTemplateButton';
-import SaveAsTemplateButton from '../Index/components/SaveAsTemplateButton';
-
-// import AttributeTable from './components/AttributeTable';
+import AttributeTable from './components/AttributeTable';
 
 function Detail(): JSX.Element {
   const navigate = useNavigate();
@@ -36,8 +33,7 @@ function Detail(): JSX.Element {
     description: data?.templateObject?.properties?.basicInfo?.description,
     id: data?.templateObject?.id,
     title: data?.templateObject?.properties?.basicInfo?.name,
-    // eslint-disable-next-line  no-underscore-dangle
-    updatedAt: String(data?.templateObject?.properties?.sysField?._updatedAt),
+    updatedAt: data?.templateObject?.properties?.sysField?._updatedAt,
   };
   // const created_at = data.created_at
   // console.log('data', data);
@@ -63,31 +59,26 @@ function Detail(): JSX.Element {
             />
             {isSuccess && (
               <MoreAction
-                styles={{ actionList: { width: '140px' } }}
-                buttons={[
-                  <SaveAsTemplateButton
-                    data={defaultValues}
-                    key="modify"
-                    onSuccess={() => {
-                      // refetch();
-                    }}
-                  />,
-                  <ModifyTemplateButton
-                    data={defaultValues}
-                    key="modify"
-                    onSuccess={() => {
-                      // refetch();
-                    }}
-                  />,
-                  <DeleteTemplateButton
-                    key="delete"
-                    id={defaultValues.id}
-                    name={defaultValues.title}
-                    refetchData={() => {
-                      // refetch();
-                    }}
-                  />,
-                ]}
+                buttons={
+                  [
+                    // <ModifySubscriptionButton
+                    //   key="modify"
+                    //   data={defaultValues}
+                    //   onSuccess={() => {
+                    //     refetch();
+                    //   }}
+                    // />,
+                    // <DeleteSubscriptionButton
+                    //   key="delete"
+                    //   id={data?.id}
+                    //   name={data?.title}
+                    //   refetchData={() => {
+                    //     navigate('/');
+                    //     // refetch();
+                    //   }}
+                    // />,
+                  ]
+                }
               />
             )}
           </Flex>
@@ -149,7 +140,7 @@ function Detail(): JSX.Element {
       >
         <Tabs display="flex" flexDirection="column" flex="1">
           <CustomTabList>
-            {/* <CustomTab>属性模板</CustomTab> */}
+            <CustomTab>属性模板</CustomTab>
             <CustomTab>遥测模板</CustomTab>
             {/* <CustomTab>服务指令</CustomTab> */}
           </CustomTabList>
@@ -160,9 +151,9 @@ function Detail(): JSX.Element {
             borderBottomLeftRadius="4px"
             borderBottomRightRadius="4px"
           >
-            {/* <TabPanel padding="0" height="100%">
+            <TabPanel padding="0" height="100%">
               <AttributeTable id={ID} title="123" />
-            </TabPanel> */}
+            </TabPanel>
             <TabPanel padding="0" height="100%">
               <TelemetryTable id={ID} title="123" />
             </TabPanel>

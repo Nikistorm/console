@@ -9,12 +9,10 @@ import CreateTelemetryModal from '../CreateTelemetryModal';
 
 type Props = {
   handleSubmit: (values: FormValues) => void;
-  defaultValues?: FormValues;
 };
 
 export default function EditTelemetryButton({
   handleSubmit = () => {},
-  defaultValues,
 }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -47,7 +45,6 @@ export default function EditTelemetryButton({
       <CreateTelemetryModal
         title="修改遥测"
         isOpen={isOpen}
-        defaultValues={defaultValues}
         // isConfirmButtonLoading={isLoading}
         onClose={onClose}
         onConfirm={handleSubmit}
